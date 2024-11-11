@@ -226,34 +226,32 @@ export default function Component() {
   }, [selectedDay, itinerary, updateMap])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-green-100">
-      <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold mb-8 text-center text-blue-800 pt-8">
-          <span className="inline-block transform hover:scale-110 transition-transform duration-200">
-            🌍 Trip Planner
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="container mx-auto p-4 max-w-7xl">
+        <h1 className="text-5xl font-bold mb-12 text-center text-indigo-900 pt-8">
+          <span className="text-indigo-600">🌎</span>
+          <span className="inline-block transform hover:scale-110 transition-transform duration-200 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+             Trip Planner
           </span>
         </h1>
 
-        {/* Main grid layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left column: Inputs and Places */}
-          <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="space-y-10 backdrop-blur-sm bg-white/50 p-6 rounded-2xl shadow-xl">
             <HotelInput onSubmit={handleHotelSubmit} onDaysChange={setDays} />
             <PlaceInput onSubmit={handlePlaceSubmit} />
             
-            {/* Places List */}
             <div>
-              <h2 className="text-2xl font-semibold mb-4 text-blue-800 flex items-center">
-                <MapPin className="mr-2" />
+              <h2 className="text-2xl font-semibold mb-6 text-indigo-900 flex items-center">
+                <MapPin className="mr-2 text-indigo-600" />
                 Places to Visit
               </h2>
-              <ul className="space-y-2 bg-white rounded-lg shadow-md p-4">
+              <ul className="space-y-3 bg-white/80 rounded-xl shadow-lg p-5">
                 {places.map((place, index) => (
-                  <li key={index} className="flex items-center justify-between bg-blue-50 p-3 rounded-md">
-                    <span className="font-medium text-blue-800">{place.name}</span>
+                  <li key={index} className="flex items-center justify-between bg-indigo-50 p-4 rounded-lg hover:shadow-md transition-all duration-200">
+                    <span className="font-medium text-indigo-900">{place.name}</span>
                     <button
                       onClick={() => handleRemovePlace(index)}
-                      className="text-red-500 hover:text-red-700 transition duration-300"
+                      className="text-red-400 hover:text-red-600 transition duration-200 p-2 hover:bg-red-50 rounded-full"
                     >
                       <X className="h-5 w-5" />
                     </button>
@@ -262,10 +260,9 @@ export default function Component() {
               </ul>
             </div>
 
-            {/* Plan Trip Button */}
             <button
               onClick={handlePlanTrip}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               disabled={isLoading || !hotel.name || places.length === 0}
             >
               {isLoading ? (
@@ -286,13 +283,12 @@ export default function Component() {
             {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
           </div>
 
-          {/* Right column: Map */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-4 text-blue-800 flex items-center">
-              <Navigation className="mr-2" />
+          <div className="backdrop-blur-sm bg-white/50 p-6 rounded-2xl shadow-xl">
+            <h2 className="text-2xl font-semibold mb-6 text-indigo-900 flex items-center">
+              <Navigation className="mr-2 text-indigo-600" />
               Trip Map
             </h2>
-            <div className="rounded-lg overflow-hidden shadow-lg">
+            <div className="rounded-xl overflow-hidden shadow-2xl">
               {isClient && (
                 <GoogleMap
                   mapContainerStyle={mapContainerStyle}
@@ -317,18 +313,16 @@ export default function Component() {
           </div>
         </div>
 
-        {/* Floating button for itinerary */}
         {itinerary && (
           <>
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="fixed bottom-4 right-4 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 flex items-center space-x-2"
+              className="fixed bottom-6 right-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 flex items-center space-x-3"
             >
               <Calendar className="w-5 h-5" />
               <span>View Itinerary</span>
             </button>
 
-            {/* Itinerary Drawer */}
             <Transition.Root show={isDrawerOpen} as={Fragment}>
               <Dialog as="div" className="relative z-50" onClose={setIsDrawerOpen}>
                 <Transition.Child
@@ -356,32 +350,30 @@ export default function Component() {
                         leaveTo="translate-x-full"
                       >
                         <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                          <div className="flex h-full flex-col bg-white shadow-xl">
-                            <div className="px-4 py-6 sm:px-6">
-                              <div className="flex items-center justify-between">
-                                <Dialog.Title className="text-xl font-semibold text-gray-900">
+                          <div className="flex h-full flex-col bg-gradient-to-b from-white to-indigo-50 shadow-xl">
+                            <div className="px-6 py-8 sm:px-8">
+                              <div className="flex items-center justify-between mb-8">
+                                <Dialog.Title className="text-2xl font-bold text-indigo-900">
                                   Your Travel Itinerary
                                 </Dialog.Title>
                                 <button
                                   onClick={() => setIsDrawerOpen(false)}
-                                  className="rounded-md text-gray-400 hover:text-gray-500"
+                                  className="rounded-full p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition duration-200"
                                 >
-                                  <span className="sr-only">Close panel</span>
                                   <X className="h-6 w-6" />
                                 </button>
                               </div>
 
-                              {/* Itinerary Content with Disclosures */}
-                              <div className="mt-6">
+                              <div className="space-y-4">
                                 {Object.entries(itinerary).map(([day, dayData]) => (
-                                  <Disclosure key={day} as="div" className="mt-2">
+                                  <Disclosure key={day} as="div">
                                     {({ open }) => (
                                       <>
                                         <Disclosure.Button 
-                                          className={`flex w-full justify-between rounded-lg px-4 py-2 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-blue-500 ${
+                                          className={`flex w-full justify-between rounded-xl px-5 py-3 text-left font-medium transition-all duration-200 ${
                                             selectedDay === day 
-                                              ? 'bg-blue-500 text-white' 
-                                              : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+                                              ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' 
+                                              : 'bg-white text-indigo-900 hover:bg-indigo-50'
                                           }`}
                                           onClick={() => handleDaySelect(day)}
                                         >
@@ -394,7 +386,7 @@ export default function Component() {
                                             }`}
                                           />
                                         </Disclosure.Button>
-                                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                                        <Disclosure.Panel className="px-5 pt-4 pb-3 text-sm text-gray-600">
                                           <ul className="space-y-2">
                                             {dayData.route.map((place, index) => (
                                               <li key={index} className="flex items-center space-x-2">
